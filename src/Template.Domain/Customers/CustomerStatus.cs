@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using CSharpFunctionalExtensions;
 
 namespace Logic.Customers
 {
-    public class CustomerStatus : ValueObject<CustomerStatus>
+    public class CustomerStatus : ValueObject
     {
         public static readonly CustomerStatus Regular = new CustomerStatus(CustomerStatusType.Regular, ExpirationDate.Infinite);
 
@@ -32,14 +33,11 @@ namespace Logic.Customers
             return new CustomerStatus(CustomerStatusType.Advanced, (ExpirationDate)DateTime.UtcNow.AddYears(1));
         }
 
-        protected override bool EqualsCore(CustomerStatus other)
+        protected override IEnumerable<object> GetEqualityComponents()
         {
-            return Type == other.Type && ExpirationDate == other.ExpirationDate;
-        }
-
-        protected override int GetHashCodeCore()
-        {
-            return Type.GetHashCode() ^ ExpirationDate.GetHashCode();
+            yield return Type;
+            yield return ExpirationDate;
+            yield return IsAdvanced;
         }
     }
 

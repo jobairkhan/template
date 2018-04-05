@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using CSharpFunctionalExtensions;
 
 namespace Logic.Customers
 {
-    public class CustomerName : ValueObject<CustomerName>
+    public class CustomerName : ValueObject
     {
         public string Value { get; }
 
@@ -24,17 +25,7 @@ namespace Logic.Customers
 
             return Result.Ok(new CustomerName(customerName));
         }
-
-        protected override bool EqualsCore(CustomerName other)
-        {
-            return Value.Equals(other.Value, StringComparison.InvariantCultureIgnoreCase);
-        }
-
-        protected override int GetHashCodeCore()
-        {
-            return Value.GetHashCode();
-        }
-
+        
         public static implicit operator string(CustomerName customerName)
         {
             return customerName.Value;
@@ -43,6 +34,11 @@ namespace Logic.Customers
         public static explicit operator CustomerName(string customerName)
         {
             return Create(customerName).Value;
+        }
+
+        protected override IEnumerable<object> GetEqualityComponents()
+        {
+            yield return Value;
         }
     }
 }

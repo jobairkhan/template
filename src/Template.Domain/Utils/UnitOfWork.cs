@@ -1,22 +1,18 @@
 ﻿using System;
 using System.Data;
 using System.Linq;
-using NHibernate;
-using NHibernate.Linq;
 
 namespace Logic.Utils
 {
     public class UnitOfWork : IDisposable
     {
-        private readonly ISession _session;
-        private readonly ITransaction _transaction;
+        private readonly ISession _context;
         private bool _isAlive = true;
         private bool _isCommitted;
 
-        public UnitOfWork(SessionFactory sessionFactory)
+        public UnitOfWork(ISession context)
         {
-            _session = sessionFactory.OpenSession();
-            _transaction = _session.BeginTransaction(IsolationLevel.ReadCommitted);
+            _context = context;
         }
 
         public void Dispose()
@@ -30,13 +26,12 @@ namespace Logic.Utils
             {
                 if (_isCommitted)
                 {
-                    _transaction.Commit();
+                    _context.SaveChanges();
                 }
             }
             finally
             {
-                _transaction.Dispose();
-                _session.Dispose();
+                _context.Dispose();
             }
         }
 
@@ -51,27 +46,31 @@ namespace Logic.Utils
         internal T Get<T>(long id)
             where T : class
         {
-            return _session.Get<T>(id);
+            return _context.Get<T>(id);
         }
 
         internal void SaveOrUpdate<T>(T entity)
         {
-            _session.SaveOrUpdate(entity);
+            _context.Attach(entity);
         }
 
         internal void Delete<T>(T entity)
         {
-            _session.Delete(entity);
+            _context.Delete(entity);
         }
 
         public IQueryable<T> Query<T>()
         {
-            return _session.Query<T>();
+            return _context.Query<T>();
         }
+    }
 
-        public ISQLQuery CreateSQLQuery(string q)
-        {
-            return _session.CreateSQLQuery(q);
-        }
+    public interface ISession : IDisposable
+    {
+        void SaveChanges();
+        T Get<T>(long id) where T : class;
+        void Attach<T>(T entity);
+        void Delete<T>(T entity);
+        IQueryable<T> Query<T>();
     }
 }

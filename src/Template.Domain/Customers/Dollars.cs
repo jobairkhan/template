@@ -1,8 +1,9 @@
-﻿using CSharpFunctionalExtensions;
+﻿using System.Collections.Generic;
+using CSharpFunctionalExtensions;
 
 namespace Logic.Customers
 {
-    public class Dollars : ValueObject<Dollars>
+    public class Dollars : ValueObject
     {
         private const decimal MaxDollarAmount = 1_000_000;
 
@@ -44,19 +45,14 @@ namespace Logic.Customers
             return new Dollars(dollars1.Value + dollars2.Value);
         }
 
-        protected override bool EqualsCore(Dollars other)
-        {
-            return Value == other.Value;
-        }
-
-        protected override int GetHashCodeCore()
-        {
-            return Value.GetHashCode();
-        }
-
         public static implicit operator decimal(Dollars dollars)
         {
             return dollars.Value;
+        }
+
+        protected override IEnumerable<object> GetEqualityComponents()
+        {
+            yield return Value;
         }
     }
 }
