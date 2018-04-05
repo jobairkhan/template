@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Logic.Common
+﻿namespace Template.Infrastructure
 {
     public abstract class Entity
     {

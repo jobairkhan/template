@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using CSharpFunctionalExtensions;
 
-namespace Logic.Customers
+namespace Template.Domain.Customers
 {
     public class Dollars : ValueObject
     {

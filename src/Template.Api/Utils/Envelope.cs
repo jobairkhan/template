@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Api.Utils
+namespace Template.Api.Utils
 {
     public class Envelope<T>
     {

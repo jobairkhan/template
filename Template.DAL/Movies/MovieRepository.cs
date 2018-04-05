@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Logic.Common;
-using Logic.Utils;
+using Template.Domain.Movies;
+using Template.Infrastructure;
 
-namespace Logic.Movies
+namespace Template.DAL.Movies
 {
     public class MovieRepository : Repository<Movie>
     {

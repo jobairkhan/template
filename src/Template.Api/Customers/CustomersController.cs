@@ -1,13 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Api.Utils;
 using CSharpFunctionalExtensions;
-using Logic.Customers;
-using Logic.Movies;
-using Logic.Utils;
 using Microsoft.AspNetCore.Mvc;
+using Template.Api.Utils;
+using Template.DAL;
+using Template.DAL.Customers;
+using Template.DAL.Movies;
+using Template.Domain.Customers;
+using Template.Domain.Movies;
 
-namespace Api.Customers
+namespace Template.Api.Customers
 {
     [Route("api/[controller]")]
     public class CustomersController : BaseController

@@ -1,8 +1,8 @@
 ﻿using System;
-using Logic.Common;
-using Logic.Movies;
+using Template.Domain.Movies;
+using Template.Infrastructure;
 
-namespace Logic.Customers
+namespace Template.Domain.Customers
 {
     public class PurchasedMovie : Entity
     {

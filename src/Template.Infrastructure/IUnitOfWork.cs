@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-namespace Logic.Common
+namespace Template.Infrastructure
 {
     public interface IUnitOfWork
     {

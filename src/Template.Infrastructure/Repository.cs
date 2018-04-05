@@ -1,4 +1,4 @@
-﻿namespace Logic.Common
+﻿namespace Template.Infrastructure
 {
     public abstract class Repository<T>
         where T : Entity

@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Logic.Common;
-using Logic.Utils;
+using Template.Domain.Customers;
+using Template.Infrastructure;
 
-namespace Logic.Customers
+namespace Template.DAL.Customers
 {
     public class CustomerRepository : Repository<Customer>
     {

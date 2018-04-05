@@ -6,7 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Serilog;
 using Serilog.Events;
 
-namespace Api.Utils
+namespace Template.Api.Utils
 {
     public class Program
     {

@@ -1,9 +1,8 @@
-using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using CSharpFunctionalExtensions;
 
-namespace Logic.Customers
+namespace Template.Domain.Customers
 {
     public class Email : ValueObject
     {

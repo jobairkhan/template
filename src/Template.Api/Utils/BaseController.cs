@@ -1,7 +1,7 @@
-﻿using Logic.Utils;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Template.DAL;
 
-namespace Api.Utils
+namespace Template.Api.Utils
 {
     public class BaseController : Controller
     {

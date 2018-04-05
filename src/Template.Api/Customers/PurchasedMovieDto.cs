@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Api.Customers
+namespace Template.Api.Customers
 {
     public class PurchasedMovieDto
     {

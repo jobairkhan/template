@@ -1,8 +1,8 @@
 ﻿using System;
-using Logic.Common;
-using Logic.Customers;
+using Template.Domain.Customers;
+using Template.Infrastructure;
 
-namespace Logic.Movies
+namespace Template.Domain.Movies
 {
     public abstract class Movie : Entity
     {

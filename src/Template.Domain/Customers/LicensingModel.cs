@@ -1,4 +1,4 @@
-namespace Logic.Customers
+namespace Template.Domain.Customers
 {
     public enum LicensingModel
     {

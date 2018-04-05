@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Data;
 using System.Linq;
-using Logic.Common;
+using Template.Infrastructure;
 
-namespace Logic.Utils
+namespace Template.DAL
 {
     
 
