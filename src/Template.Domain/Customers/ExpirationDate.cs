@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using CSharpFunctionalExtensions;
 
 namespace Logic.Customers
 {
-    public class ExpirationDate : ValueObject<ExpirationDate>
+    public class ExpirationDate : ValueObject
     {
         public static readonly ExpirationDate Infinite = new ExpirationDate(null);
 
@@ -21,16 +22,6 @@ namespace Logic.Customers
             return Result.Ok(new ExpirationDate(date));
         }
 
-        protected override bool EqualsCore(ExpirationDate other)
-        {
-            return Date == other.Date;
-        }
-
-        protected override int GetHashCodeCore()
-        {
-            return Date.GetHashCode();
-        }
-
         public static explicit operator ExpirationDate(DateTime? date)
         {
             if (date.HasValue)
@@ -42,6 +33,11 @@ namespace Logic.Customers
         public static implicit operator DateTime? (ExpirationDate date)
         {
             return date.Date;
+        }
+
+        protected override IEnumerable<object> GetEqualityComponents()
+        {
+            yield return Date;
         }
     }
 }

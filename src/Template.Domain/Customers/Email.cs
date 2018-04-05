@@ -1,10 +1,11 @@
 using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using CSharpFunctionalExtensions;
 
 namespace Logic.Customers
 {
-    public class Email : ValueObject<Email>
+    public class Email : ValueObject
     {
         public string Value { get; }
 
@@ -26,16 +27,6 @@ namespace Logic.Customers
             return Result.Ok(new Email(email));
         }
 
-        protected override bool EqualsCore(Email other)
-        {
-            return Value.Equals(other.Value, StringComparison.InvariantCultureIgnoreCase);
-        }
-
-        protected override int GetHashCodeCore()
-        {
-            return Value.GetHashCode();
-        }
-
         public static explicit operator Email(string email)
         {
             return Create(email).Value;
@@ -44,6 +35,11 @@ namespace Logic.Customers
         public static implicit operator string(Email email)
         {
             return email.Value;
+        }
+
+        protected override IEnumerable<object> GetEqualityComponents()
+        {
+            yield return Value;
         }
     }
 }
