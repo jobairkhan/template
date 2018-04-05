@@ -1,13 +1,11 @@
-﻿using Logic.Utils;
-
-namespace Logic.Common
+﻿namespace Logic.Common
 {
     public abstract class Repository<T>
         where T : Entity
     {
-        protected readonly UnitOfWork _unitOfWork;
+        protected readonly IUnitOfWork _unitOfWork;
 
-        protected Repository(UnitOfWork unitOfWork)
+        protected Repository(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }

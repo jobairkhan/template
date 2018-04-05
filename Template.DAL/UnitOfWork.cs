@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Data;
 using System.Linq;
+using Logic.Common;
 
 namespace Logic.Utils
 {
-    public class UnitOfWork : IDisposable
+    
+
+    public class UnitOfWork : IDisposable, IUnitOfWork
     {
         private readonly ISession _context;
         private bool _isAlive = true;
@@ -43,18 +46,18 @@ namespace Logic.Utils
             _isCommitted = true;
         }
 
-        internal T Get<T>(long id)
+        public T Get<T>(long id)
             where T : class
         {
             return _context.Get<T>(id);
         }
 
-        internal void SaveOrUpdate<T>(T entity)
+        public void SaveOrUpdate<T>(T entity)
         {
             _context.Attach(entity);
         }
 
-        internal void Delete<T>(T entity)
+        public void Delete<T>(T entity)
         {
             _context.Delete(entity);
         }
