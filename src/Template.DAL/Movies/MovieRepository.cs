@@ -7,7 +7,7 @@ namespace Template.DAL.Movies
 {
     public class MovieRepository : Repository<Movie>
     {
-        public MovieRepository(UnitOfWork unitOfWork)
+        public MovieRepository(IUnitOfWork unitOfWork)
             : base(unitOfWork)
         {
         }

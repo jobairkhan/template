@@ -1,13 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Template.DAL;
+using Template.Infrastructure;
 
 namespace Template.Api.Utils
 {
     public class BaseController : Controller
     {
-        private readonly UnitOfWork _unitOfWork;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public BaseController(UnitOfWork unitOfWork)
+        public BaseController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }

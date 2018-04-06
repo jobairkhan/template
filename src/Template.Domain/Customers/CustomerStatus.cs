@@ -10,8 +10,9 @@ namespace Template.Domain.Customers
 
         public CustomerStatusType Type { get; }
 
-        private readonly DateTime? _expirationDate;
-        public ExpirationDate ExpirationDate => (ExpirationDate)_expirationDate;
+        private ExpirationDate _expirationDate;
+
+        public ExpirationDate ExpirationDate => _expirationDate;
 
         public bool IsAdvanced => Type == CustomerStatusType.Advanced && !ExpirationDate.IsExpired;
 

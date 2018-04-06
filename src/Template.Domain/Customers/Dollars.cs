@@ -11,6 +11,11 @@ namespace Template.Domain.Customers
 
         public bool IsZero => Value == 0;
 
+        private Dollars()
+        {
+            
+        }
+
         private Dollars(decimal value)
         {
             Value = value;

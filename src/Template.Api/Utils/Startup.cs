@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
@@ -7,6 +8,7 @@ using Swashbuckle.AspNetCore.Swagger;
 using Template.DAL;
 using Template.DAL.Customers;
 using Template.DAL.Movies;
+using Template.Infrastructure;
 
 namespace Template.Api.Utils
 {
@@ -34,8 +36,8 @@ namespace Template.Api.Utils
         {
             services.AddMvc();
 
-            //services.AddSingleton(new SessionFactory(_configuration["ConnectionString"]));
-            services.AddScoped<UnitOfWork>();
+            services.AddDbContext<ApplicationContext>(opts => opts.UseSqlServer(_configuration["ConnectionString:Default"]));;
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddTransient<MovieRepository>();
             services.AddTransient<CustomerRepository>();
 

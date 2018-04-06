@@ -7,6 +7,8 @@ namespace Template.Domain.Customers
     {
         public string Value { get; }
 
+        private CustomerName() { }
+
         private CustomerName(string value)
         {
             Value = value;

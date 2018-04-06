@@ -9,6 +9,7 @@ using Template.DAL;
 using Template.DAL.Customers;
 using Template.DAL.Movies;
 using Template.Domain.Customers;
+using Template.Infrastructure;
 
 namespace Template.Api.Customers
 {
@@ -27,7 +28,7 @@ namespace Template.Api.Customers
         /// <param name="unitOfWork"></param>
         /// <param name="movieRepository"></param>
         /// <param name="customerRepository"></param>
-        public CustomersController(UnitOfWork unitOfWork, MovieRepository movieRepository, CustomerRepository customerRepository)
+        public CustomersController(IUnitOfWork unitOfWork, MovieRepository movieRepository, CustomerRepository customerRepository)
             : base(unitOfWork)
         {
             _customerRepository = customerRepository;

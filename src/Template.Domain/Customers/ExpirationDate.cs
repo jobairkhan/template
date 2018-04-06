@@ -7,14 +7,17 @@ namespace Template.Domain.Customers
     public class ExpirationDate : ValueObject
     {
         public static readonly ExpirationDate Infinite = new ExpirationDate(null);
+        private DateTime? _date;
 
-        public DateTime? Date { get; }
+        public DateTime? Date => _date;
 
         public bool IsExpired => this != Infinite && Date < DateTime.UtcNow;
 
+        private ExpirationDate() { }
+
         private ExpirationDate(DateTime? date)
         {
-            Date = date;
+            _date = date;
         }
 
         public static Result<ExpirationDate> Create(DateTime date)

@@ -2,14 +2,15 @@
 {
     public abstract class Entity
     {
+        private long _id;
         protected Entity() : this(0) { }
 
         protected Entity(long id)
         {
-            Id = id;
+            _id = id;
         }
 
-        public virtual long Id { get; }
+        public virtual long Id => _id;
 
         public override bool Equals(object obj)
         {
