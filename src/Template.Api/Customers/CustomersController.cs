@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using CSharpFunctionalExtensions;
 using Microsoft.AspNetCore.Mvc;
 using Template.Api.Utils;
@@ -7,16 +9,24 @@ using Template.DAL;
 using Template.DAL.Customers;
 using Template.DAL.Movies;
 using Template.Domain.Customers;
-using Template.Domain.Movies;
 
 namespace Template.Api.Customers
 {
+    /// <summary>
+    /// Customers Controller
+    /// </summary>
     [Route("api/[controller]")]
     public class CustomersController : BaseController
     {
         private readonly MovieRepository _movieRepository;
         private readonly CustomerRepository _customerRepository;
 
+        /// <summary>
+        /// Create an instance of customer controller
+        /// </summary>
+        /// <param name="unitOfWork"></param>
+        /// <param name="movieRepository"></param>
+        /// <param name="customerRepository"></param>
         public CustomersController(UnitOfWork unitOfWork, MovieRepository movieRepository, CustomerRepository customerRepository)
             : base(unitOfWork)
         {
@@ -24,14 +34,20 @@ namespace Template.Api.Customers
             _movieRepository = movieRepository;
         }
 
+        /// <summary>
+        /// Get customer information
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("{id}")]
-        public IActionResult Get(long id)
+        public async Task<IActionResult> Get(long id, CancellationToken cancellationToken)
         {
-            Customer customer = _customerRepository.GetById(id);
+            var customer = await _customerRepository.GetById(id, cancellationToken);
             if (customer == null)
                 return NotFound();
-            
+
             var dto = new CustomerDto
             {
                 Id = customer.Id,
@@ -56,12 +72,17 @@ namespace Template.Api.Customers
             return Ok(dto);
         }
 
+        /// <summary>
+        /// List of customers
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpGet]
-        public IActionResult GetList()
+        public async Task<IActionResult>  GetList(CancellationToken cancellationToken)
         {
-            IReadOnlyList<Customer> customers = _customerRepository.GetList();
+            var customers = await _customerRepository.GetList(cancellationToken);
 
-            List<CustomerInListDto> dtos = customers.Select(x => new CustomerInListDto
+            var data = customers.Select(x => new CustomerInListDto
             {
                 Id = x.Id,
                 Name = x.Name.Value,
@@ -70,12 +91,18 @@ namespace Template.Api.Customers
                 Status = x.Status.Type.ToString(),
                 StatusExpirationDate = x.Status.ExpirationDate
             }).ToList();
-            
-            return Ok(dtos);
+
+            return Ok(data);
         }
 
+        /// <summary>
+        /// Add a new customer
+        /// </summary>
+        /// <param name="item"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpPost]
-        public IActionResult Create([FromBody] CreateCustomerDto item)
+        public async Task<IActionResult>  Create([FromBody] CreateCustomerDto item, CancellationToken cancellationToken)
         {
             Result<CustomerName> customerNameOrError = CustomerName.Create(item.Name);
             Result<Email> emailOrError = Email.Create(item.Email);
@@ -84,7 +111,8 @@ namespace Template.Api.Customers
             if (result.IsFailure)
                 return Error(result.Error);
 
-            if (_customerRepository.GetByEmail(emailOrError.Value) != null)
+            var existingCustomer = await _customerRepository.GetByEmail(emailOrError.Value, cancellationToken);
+            if (existingCustomer != null)
                 return Error("Email is already in use: " + item.Email);
 
             var customer = new Customer(customerNameOrError.Value, emailOrError.Value);
@@ -95,13 +123,13 @@ namespace Template.Api.Customers
 
         [HttpPut]
         [Route("{id}")]
-        public IActionResult Update(long id, [FromBody] UpdateCustomerDto item)
+        public async Task<IActionResult> Update(long id, [FromBody] UpdateCustomerDto item, CancellationToken cancellationToken)
         {
             Result<CustomerName> customerNameOrError = CustomerName.Create(item.Name);
             if (customerNameOrError.IsFailure)
                 return Error(customerNameOrError.Error);
 
-            Customer customer = _customerRepository.GetById(id);
+            var customer = await _customerRepository.GetById(id, cancellationToken);
             if (customer == null)
                 return Error("Invalid customer id: " + id);
 
@@ -110,15 +138,22 @@ namespace Template.Api.Customers
             return Ok();
         }
 
+        /// <summary>
+        /// To purchase a movie
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="movieId"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("{id}/movies")]
-        public IActionResult PurchaseMovie(long id, [FromBody] long movieId)
+        public async Task<IActionResult> PurchaseMovie(long id, [FromBody] long movieId, CancellationToken cancellationToken)
         {
-            Movie movie = _movieRepository.GetById(movieId);
+            var movie = await _movieRepository.GetById(movieId, cancellationToken);
             if (movie == null)
                 return Error("Invalid movie id: " + movieId);
 
-            Customer customer = _customerRepository.GetById(id);
+            var customer = await _customerRepository.GetById(id, cancellationToken);
             if (customer == null)
                 return Error("Invalid customer id: " + id);
 
@@ -130,11 +165,17 @@ namespace Template.Api.Customers
             return Ok();
         }
 
+        /// <summary>
+        /// To promote a customer
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("{id}/promotion")]
-        public IActionResult PromoteCustomer(long id)
+        public async Task<IActionResult> PromoteCustomer(long id, CancellationToken cancellationToken)
         {
-            Customer customer = _customerRepository.GetById(id);
+            Customer customer = await _customerRepository.GetById(id, cancellationToken);
             if (customer == null)
                 return Error("Invalid customer id: " + id);
 

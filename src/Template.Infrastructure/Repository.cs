@@ -1,4 +1,7 @@
-﻿namespace Template.Infrastructure
+﻿using System.Threading;
+using System.Threading.Tasks;
+
+namespace Template.Infrastructure
 {
     public abstract class Repository<T>
         where T : Entity
@@ -10,9 +13,10 @@
             _unitOfWork = unitOfWork;
         }
 
-        public T GetById(long id)
+        public async Task<T> GetById(long id, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return _unitOfWork.Get<T>(id);
+            return await 
+                _unitOfWork.Get<T>(id, cancellationToken);
         }
 
         public void Add(T entity)

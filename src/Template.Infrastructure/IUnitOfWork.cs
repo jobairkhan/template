@@ -1,17 +1,18 @@
 ﻿using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Template.Infrastructure
 {
-    public interface IUnitOfWork
+    public interface IUnitOfWork : IRepository
     {
         void Commit();
-
-        T Get<T>(long id) where T : class;
-
-        void SaveOrUpdate<T>(T entity);
-
-        void Delete<T>(T entity);
-
-        IQueryable<T> Query<T>();
+    }
+    public interface IRepository
+    {
+        Task<T> Get<T>(long id, CancellationToken cancellationToken = default(CancellationToken)) where T : class;
+        void SaveOrUpdate<T>(T entity) where T : class;
+        void Delete<T>(T entity) where T : class;
+        IQueryable<T> Query<T>() where T : class;
     }
 }

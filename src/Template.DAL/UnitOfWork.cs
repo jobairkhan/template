@@ -1,18 +1,18 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using Template.Infrastructure;
 
 namespace Template.DAL
 {
-    
-
-    public class UnitOfWork : IDisposable, IUnitOfWork
+    public sealed class UnitOfWork : IDisposable, IUnitOfWork
     {
-        private readonly ISession _context;
+        private readonly ApplicationContext _context;
         private bool _isAlive = true;
         private bool _isCommitted;
 
-        public UnitOfWork(ISession context)
+        public UnitOfWork(ApplicationContext context)
         {
             _context = context;
         }
@@ -45,34 +45,26 @@ namespace Template.DAL
             _isCommitted = true;
         }
 
-        public T Get<T>(long id)
-            where T : class
+        public async Task<T> Get<T>(long id, CancellationToken cancellationToken = default(CancellationToken)) where T : class
         {
-            return _context.Get<T>(id);
+            var dbSet = _context.Set<T>();
+            return await dbSet.FindAsync(id, cancellationToken);
         }
 
-        public void SaveOrUpdate<T>(T entity)
+        public void SaveOrUpdate<T>(T entity) where T : class
         {
-            _context.Attach(entity);
+            _context.Set<T>().Attach(entity);
         }
 
-        public void Delete<T>(T entity)
+        public void Delete<T>(T entity) where T : class
         {
-            _context.Delete(entity);
+            var dbSet = _context.Set<T>();
+            dbSet.Remove(entity);
         }
 
-        public IQueryable<T> Query<T>()
+        public IQueryable<T> Query<T>() where T : class
         {
-            return _context.Query<T>();
+            return _context.Set<T>().AsQueryable();
         }
-    }
-
-    public interface ISession : IDisposable
-    {
-        void SaveChanges();
-        T Get<T>(long id) where T : class;
-        void Attach<T>(T entity);
-        void Delete<T>(T entity);
-        IQueryable<T> Query<T>();
     }
 }
