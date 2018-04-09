@@ -1,5 +1,4 @@
-﻿using System;
-using Template.Domain.Customers;
+﻿using Template.Domain.Customers;
 using Template.Infrastructure;
 
 namespace Template.Domain.Movies
@@ -18,31 +17,5 @@ namespace Template.Domain.Movies
         }
 
         protected abstract Dollars GetBasePrice();
-    }
-
-    public class TwoDaysMovie : Movie
-    {
-        public override ExpirationDate GetExpirationDate()
-        {
-            return (ExpirationDate)DateTime.UtcNow.AddDays(2);
-        }
-
-        protected override Dollars GetBasePrice()
-        {
-            return Dollars.Of(4);
-        }
-    }
-
-    public class LifeLongMovie : Movie
-    {
-        public override ExpirationDate GetExpirationDate()
-        {
-            return ExpirationDate.Infinite;
-        }
-
-        protected override Dollars GetBasePrice()
-        {
-            return Dollars.Of(8);
-        }
     }
 }
