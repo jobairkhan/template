@@ -61,9 +61,10 @@ namespace Template.DAL
                 entity.ToTable("Movie", "dbo");
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.Id).UseSqlServerIdentityColumn();
-                entity.HasDiscriminator<LicensingModel>("LicensingModel")
-                    .HasValue<TwoDaysMovie>(LicensingModel.TwoDays)
-                    .HasValue<LifeLongMovie>(LicensingModel.LifeLong);
+                
+                entity.HasDiscriminator<int>("LicensingModel")
+                    .HasValue<TwoDaysMovie>(1)
+                    .HasValue<LifeLongMovie>(2);
             });
 
             modelBuilder.Entity<PurchasedMovie>(entity =>

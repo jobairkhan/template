@@ -6,7 +6,7 @@ namespace Template.Domain.Movies
     public abstract class Movie : Entity
     {
         public virtual string Name { get; protected set; }
-        protected virtual LicensingModel LicensingModel { get; set; }
+        protected virtual int LicensingModel { get; set; }
 
         public abstract ExpirationDate GetExpirationDate();
 
