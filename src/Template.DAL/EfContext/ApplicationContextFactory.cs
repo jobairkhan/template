@@ -7,13 +7,13 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace Template.DAL.EfContext
 {
-    //public class ApplicationContextFactory : IDesignTimeDbContextFactory<ApplicationContext>
-    //{
-    //    public ApplicationContext CreateDbContext(string[] args)
-    //    {
-    //        var builder = new DbContextOptionsBuilder<ApplicationContext>();
-    //        builder.UseSqlServer(args[0]);
-    //        return new ApplicationContext(builder.Options);
-    //    }
-    //}
+    public class ApplicationContextFactory : IDesignTimeDbContextFactory<ApplicationContext>
+    {
+        public ApplicationContext CreateDbContext(string[] args)
+        {
+            var builder = new DbContextOptionsBuilder<ApplicationContext>();
+            builder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=OnlineTheater;Trusted_Connection=true;");
+            return new ApplicationContext(builder.Options);
+        }
+    }
 }
