@@ -34,12 +34,12 @@ namespace Template.Api.Utils
         /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
-
             services.AddDbContext<ApplicationContext>(opts => opts.UseSqlServer(_configuration["ConnectionString:Default"]));;
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddTransient<MovieRepository>();
             services.AddTransient<CustomerRepository>();
+            
+            services.AddMvc();
 
             // Register the Swagger generator, defining one or more Swagger documents
             services.AddSwaggerGen(c =>
@@ -56,7 +56,7 @@ namespace Template.Api.Utils
                 var filePath = Path.Combine(basePath, $"{nameof(Template)}.{nameof(Api)}.xml");
                 c.IncludeXmlComments(filePath);
             });
-            Log.Debug("Finishing configure services.");
+            Log.Debug("Services configuration completed.");
         }
 
         /// <summary>
@@ -65,6 +65,7 @@ namespace Template.Api.Utils
         /// <param name="app"></param>
         public void Configure(IApplicationBuilder app)
         {
+            app.UseStaticFiles();
             app.UseMiddleware<ExceptionHandler>();
 
             /*Enabling swagger file*/
@@ -78,6 +79,7 @@ namespace Template.Api.Utils
 
 
             app.UseMvc();
+            Log.Debug("Application configuration completed.");
         }
     }
 }
