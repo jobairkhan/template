@@ -22,6 +22,11 @@ The original example has been taken from [Pluralsight Course](https://app.plural
 ### Web
 Set Template.Api as your startup project and run on kestrel. 
 
+> __Note:__ 
+At the moment, [an issue is raised for Edge](https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/9370062/)
+Please use _chrome_ or others to run the swagger
+
+
 ## Develpoment Tips
 
 ### "Migration commands" 

@@ -1,20 +1,21 @@
 ﻿using System.IO;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Serilog;
 using Swashbuckle.AspNetCore.Swagger;
-using Template.Api.Settings;
+using Template.Api.Utils;
 using Template.DAL;
 using Template.DAL.Customers;
 using Template.DAL.EfContext;
 using Template.DAL.Movies;
 using Template.Infrastructure;
 
-namespace Template.Api.Utils
+namespace Template.Api
 {
     /// <summary>
     /// 
@@ -47,8 +48,10 @@ namespace Template.Api.Utils
             services.TryAddScoped<IUnitOfWork, UnitOfWork>();
             services.TryAddTransient<MovieRepository>();
             services.TryAddTransient<CustomerRepository>();
-            
-            services.AddMvc();
+
+            services
+                .AddMvc();
+                //.AddMvcOptions(c => { c.OutputFormatters.RemoveType<JsonOutputFormatter>(); });
 
             // Register the Swagger generator, defining one or more Swagger documents
             services.AddSwaggerGen(c =>

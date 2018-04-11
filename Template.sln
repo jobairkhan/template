@@ -8,6 +8,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{59756413-9920-4560-947D-539FE594E657}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{3D1C40C3-E585-486D-B22D-8ADFDEF355C5}"
+	ProjectSection(SolutionItems) = preProject
+		docs\Dependencies Graph.png = docs\Dependencies Graph.png
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solution", "solution", "{C51D5DA4-4957-4FAA-8230-8545DC2EAF09}"
 	ProjectSection(SolutionItems) = preProject
