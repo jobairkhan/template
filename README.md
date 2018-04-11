@@ -19,6 +19,9 @@ The original example has been taken from [Pluralsight Course](https://app.plural
  - Go to the Template.DAL folder
  - Execute ` dotnet ef database update `
 
+### Web
+Set Template.Api as your startup project and run on kestrel. 
+
 ## Develpoment Tips
 
 ### "Migration commands" 
