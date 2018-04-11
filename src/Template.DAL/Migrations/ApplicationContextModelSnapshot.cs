@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.Internal;
 using Microsoft.EntityFrameworkCore.ValueGeneration;
 using System;
 using Template.DAL;
+using Template.DAL.EfContext;
 
 namespace Template.DAL.Migrations
 {

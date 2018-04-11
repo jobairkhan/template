@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Template.DAL.EfContext;
 using Template.Infrastructure;
 
 namespace Template.DAL

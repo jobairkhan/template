@@ -1,12 +1,16 @@
 ﻿using System.IO;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Serilog;
 using Swashbuckle.AspNetCore.Swagger;
+using Template.Api.Settings;
 using Template.DAL;
 using Template.DAL.Customers;
+using Template.DAL.EfContext;
 using Template.DAL.Movies;
 using Template.Infrastructure;
 
@@ -34,10 +38,15 @@ namespace Template.Api.Utils
         /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationContext>(opts => opts.UseSqlServer(_configuration["ConnectionString:Default"]));;
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddTransient<MovieRepository>();
-            services.AddTransient<CustomerRepository>();
+            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.TryAddSingleton(_configuration);
+            services.Configure<EntaSettings>(_configuration.GetSection("EntaSettings"));
+
+            services.AddDbContext<ApplicationContext>(opts => opts.UseSqlServer(_configuration["ConnectionString:Default"]));
+
+            services.TryAddScoped<IUnitOfWork, UnitOfWork>();
+            services.TryAddTransient<MovieRepository>();
+            services.TryAddTransient<CustomerRepository>();
             
             services.AddMvc();
 
@@ -65,10 +74,10 @@ namespace Template.Api.Utils
         /// <param name="app"></param>
         public void Configure(IApplicationBuilder app)
         {
-            app.UseStaticFiles();
             app.UseMiddleware<ExceptionHandler>();
 
             /*Enabling swagger file*/
+            app.UseStaticFiles();
             app.UseSwagger();
             /*Enabling Swagger ui, consider doing it on Development env only*/
             app.UseSwaggerUI(c =>

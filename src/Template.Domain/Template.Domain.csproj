@@ -8,16 +8,10 @@
     <Compile Remove="Customers\CustomerMap.cs" />
     <Compile Remove="Customers\PurchasedMovieMap.cs" />
     <Compile Remove="Movies\MovieMap.cs" />
-    <Compile Remove="Utils\SessionFactory.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="CSharpFunctionalExtensions" Version="1.10.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Common\" />
-    <Folder Include="Utils\" />
   </ItemGroup>
 
   <ItemGroup>

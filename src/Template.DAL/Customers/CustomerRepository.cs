@@ -1,9 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Template.Domain.Customers;
 using Template.Infrastructure;
 
@@ -12,11 +15,16 @@ namespace Template.DAL.Customers
     public class CustomerRepository : Repository<Customer>
     {
         private readonly ILogger<CustomerRepository> _log;
+        private EntaSettings _entaSettings;
 
-        public CustomerRepository(IUnitOfWork unitOfWork, ILoggerFactory logger)
+        public CustomerRepository(IUnitOfWork unitOfWork, 
+                                  ILoggerFactory logger,
+                                  IOptions<EntaSettings> entaSettingOptions)
             : base(unitOfWork)
         {
+            Debug.Assert(logger != null, $"{nameof(logger)} != null");
             _log = logger.CreateLogger<CustomerRepository>();
+            _entaSettings = entaSettingOptions?.Value ?? throw new ArgumentNullException(nameof(entaSettingOptions));
         }
 
         public async Task<IReadOnlyList<Customer>> GetList(

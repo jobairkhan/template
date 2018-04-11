@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Template.DAL;
 using Template.Infrastructure;
 
 namespace Template.Api.Utils

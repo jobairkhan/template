@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Template.Domain.Customers;
 using Template.Domain.Movies;
 
-namespace Template.DAL
+namespace Template.DAL.EfContext
 {
     public class ApplicationContext : DbContext
     {
