@@ -2,6 +2,10 @@
 
 namespace Template.Api.Utils
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class Envelope<T>
     {
         public T Result { get; }
@@ -16,8 +20,15 @@ namespace Template.Api.Utils
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public class Envelope : Envelope<string>
     {
+        /// <summary>
+        /// Containing error message
+        /// </summary>
+        /// <param name="errorMessage"></param>
         protected Envelope(string errorMessage)
             : base(null, errorMessage)
         {
