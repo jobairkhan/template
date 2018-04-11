@@ -11,7 +11,7 @@ namespace Template.Api.Settings
     [Route("api/[controller]")]
     public class SettingsController : BaseController
     {
-        private readonly EntaSettings _entaSettings;
+        private readonly ApiSettings _apiSettings;
 
         /// <summary>
         /// 
@@ -19,10 +19,10 @@ namespace Template.Api.Settings
         /// <param name="unitOfWork"></param>
         /// <param name="entaSettingOptions"></param>
         public SettingsController(IUnitOfWork unitOfWork,
-                                  IOptions<EntaSettings> entaSettingOptions) 
+                                  IOptions<ApiSettings> entaSettingOptions) 
             : base(unitOfWork)
         {
-            _entaSettings = entaSettingOptions?.Value;
+            _apiSettings = entaSettingOptions?.Value;
         }
 
         /// <summary>
@@ -31,9 +31,9 @@ namespace Template.Api.Settings
         /// <returns></returns>
         [HttpGet]
         public IActionResult Get() => 
-            _entaSettings == null 
+            _apiSettings == null 
             ? NotFound() 
-            : Ok(_entaSettings);
+            : Ok(_apiSettings);
 
         /// <summary>
         /// Get Version
@@ -42,9 +42,9 @@ namespace Template.Api.Settings
         [HttpGet]
         [Route("/version")]
         public IActionResult GetVersion() => 
-            _entaSettings == null 
+            _apiSettings == null 
             ? NotFound() 
-            : Ok(_entaSettings.EntaVersion);
+            : Ok(_apiSettings.ApiVersion);
 
         /// <summary>
         /// Get Workstation Id
@@ -53,8 +53,8 @@ namespace Template.Api.Settings
         [HttpGet]
         [Route("/workstation")]
         public IActionResult GetWorkstation() => 
-            _entaSettings == null 
+            _apiSettings == null 
             ? NotFound() 
-            : Ok(_entaSettings.WorkStationId);
+            : Ok(_apiSettings.WorkStationId);
     }
 }

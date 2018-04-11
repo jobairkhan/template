@@ -40,7 +40,7 @@ namespace Template.Api.Utils
         {
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.TryAddSingleton(_configuration);
-            services.Configure<EntaSettings>(_configuration.GetSection("EntaSettings"));
+            services.Configure<ApiSettings>(_configuration.GetSection("Settings"));
 
             services.AddDbContext<ApplicationContext>(opts => opts.UseSqlServer(_configuration["ConnectionString:Default"]));
 

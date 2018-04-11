@@ -15,16 +15,16 @@ namespace Template.DAL.Customers
     public class CustomerRepository : Repository<Customer>
     {
         private readonly ILogger<CustomerRepository> _log;
-        private EntaSettings _entaSettings;
+        private ApiSettings _apiSettings;
 
         public CustomerRepository(IUnitOfWork unitOfWork, 
                                   ILoggerFactory logger,
-                                  IOptions<EntaSettings> entaSettingOptions)
+                                  IOptions<ApiSettings> entaSettingOptions)
             : base(unitOfWork)
         {
             Debug.Assert(logger != null, $"{nameof(logger)} != null");
             _log = logger.CreateLogger<CustomerRepository>();
-            _entaSettings = entaSettingOptions?.Value ?? throw new ArgumentNullException(nameof(entaSettingOptions));
+            _apiSettings = entaSettingOptions?.Value ?? throw new ArgumentNullException(nameof(entaSettingOptions));
         }
 
         public async Task<IReadOnlyList<Customer>> GetList(

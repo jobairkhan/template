@@ -1,8 +1,8 @@
 ﻿namespace Template.Infrastructure
 {
-    public class EntaSettings
+    public class ApiSettings
     {
-        public string EntaVersion { get; set; }
+        public string ApiVersion { get; set; }
         
 
         /// <summary>
