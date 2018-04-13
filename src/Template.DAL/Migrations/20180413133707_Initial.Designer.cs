@@ -12,7 +12,7 @@ using Template.DAL.EfContext;
 namespace Template.DAL.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20180413100316_Initial")]
+    [Migration("20180413133707_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -138,6 +138,9 @@ namespace Template.DAL.Migrations
                     b.OwnsOne("Template.Domain.Customers.Dollars", "MoneySpent", b1 =>
                         {
                             b1.Property<long>("CustomerId");
+
+                            b1.Property<decimal>("Value")
+                                .HasColumnName("MoneySpent");
 
                             b1.ToTable("Customer","dbo");
 

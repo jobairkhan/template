@@ -50,7 +50,7 @@ namespace Template.DAL.Customers
                 _unitOfWork
                 .Query<Customer>()
                 .SingleOrDefaultAsync(
-                        x => x.Email == email.Value, 
+                        x => x.Email.Value == email.Value, 
                         cancellationToken);
         }
     }

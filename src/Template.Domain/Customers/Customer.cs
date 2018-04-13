@@ -21,10 +21,10 @@ namespace Template.Domain.Customers
 
         public virtual CustomerStatus Status { get; protected set; }
 
-        private decimal _moneySpent;
+        private Dollars _moneySpent;
         public virtual Dollars MoneySpent
         {
-            get => Dollars.Of(_moneySpent);
+            get => _moneySpent;
             protected set => _moneySpent = value;
         }
 
@@ -41,7 +41,7 @@ namespace Template.Domain.Customers
             _name = name ?? throw new ArgumentNullException(nameof(name));
             _email = email ?? throw new ArgumentNullException(nameof(email));
 
-            MoneySpent = Dollars.Of(0);
+            _moneySpent = Dollars.Of(0);
             Status = CustomerStatus.Regular;
         }
 

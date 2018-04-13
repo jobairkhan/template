@@ -138,6 +138,9 @@ namespace Template.DAL.Migrations
                         {
                             b1.Property<long>("CustomerId");
 
+                            b1.Property<decimal>("Value")
+                                .HasColumnName("MoneySpent");
+
                             b1.ToTable("Customer","dbo");
 
                             b1.HasOne("Template.Domain.Customers.Customer")

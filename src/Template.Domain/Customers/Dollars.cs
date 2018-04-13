@@ -5,9 +5,10 @@ namespace Template.Domain.Customers
 {
     public class Dollars : ValueObject
     {
+        private decimal _value;
         private const decimal MaxDollarAmount = 1_000_000;
 
-        public decimal Value { get; }
+        public decimal Value => _value;
 
         public bool IsZero => Value == 0;
 
@@ -18,7 +19,7 @@ namespace Template.Domain.Customers
 
         private Dollars(decimal value)
         {
-            Value = value;
+            _value = value;
         }
 
         public static Result<Dollars> Create(decimal dollarAmount)

@@ -20,6 +20,7 @@ namespace Template.DAL.Migrations
                     Id = table.Column<long>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true),
+                    MoneySpent = table.Column<decimal>(nullable: false),
                     Email = table.Column<string>(nullable: true),
                     StatusExpirationDate = table.Column<DateTime>(nullable: true)
                 },

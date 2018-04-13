@@ -73,7 +73,14 @@ namespace Template.DAL.EfContext
                     .HasField("_value");
             });
 
-            entity.OwnsOne(o => o.MoneySpent);
+            entity.OwnsOne(o => o.MoneySpent,
+                p =>
+                {
+                    p.Property(e => e.Value)
+                        .HasColumnName("MoneySpent")
+                        .HasField("_value");
+                });
+
             entity.OwnsOne(o => o.Status, p =>
             {
                 p.OwnsOne(q => q.ExpirationDate, r =>

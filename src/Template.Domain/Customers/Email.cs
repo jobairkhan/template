@@ -10,6 +10,8 @@ namespace Template.Domain.Customers
 
         public string Value => _value;
 
+        private Email(){}
+        
         private Email(string value)
         {
             _value = value;
