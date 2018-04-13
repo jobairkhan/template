@@ -5,13 +5,15 @@ namespace Template.Domain.Customers
 {
     public class CustomerName : ValueObject
     {
-        public string Value { get; }
+        private string _value;
+
+        public string Value => _value;
 
         private CustomerName() { }
 
         private CustomerName(string value)
         {
-            Value = value;
+            _value = value;
         }
 
         public static Result<CustomerName> Create(string customerName)

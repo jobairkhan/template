@@ -6,11 +6,13 @@ namespace Template.Domain.Customers
 {
     public class Email : ValueObject
     {
-        public string Value { get; }
+        private string _value;
+
+        public string Value => _value;
 
         private Email(string value)
         {
-            Value = value;
+            _value = value;
         }
 
         public static Result<Email> Create(string email)

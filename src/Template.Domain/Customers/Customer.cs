@@ -9,15 +9,15 @@ namespace Template.Domain.Customers
 {
     public class Customer : Entity
     {
-        private string _name;
+        private CustomerName _name;
         public virtual CustomerName Name
         {
-            get => (CustomerName)_name;
+            get => _name;
             set => _name = value;
         }
 
-        private readonly string _email;
-        public virtual Email Email => (Email)_email;
+        private Email _email;
+        public virtual Email Email => _email;
 
         public virtual CustomerStatus Status { get; protected set; }
 

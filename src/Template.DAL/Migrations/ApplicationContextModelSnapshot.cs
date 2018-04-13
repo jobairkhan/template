@@ -7,7 +7,6 @@ using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
 using Microsoft.EntityFrameworkCore.ValueGeneration;
 using System;
-using Template.DAL;
 using Template.DAL.EfContext;
 
 namespace Template.DAL.Migrations
@@ -97,6 +96,9 @@ namespace Template.DAL.Migrations
                         {
                             b1.Property<long>("CustomerId");
 
+                            b1.Property<string>("Value")
+                                .HasColumnName("Name");
+
                             b1.ToTable("Customer","dbo");
 
                             b1.HasOne("Template.Domain.Customers.Customer")
@@ -141,6 +143,21 @@ namespace Template.DAL.Migrations
                             b1.HasOne("Template.Domain.Customers.Customer")
                                 .WithOne("MoneySpent")
                                 .HasForeignKey("Template.Domain.Customers.Dollars", "CustomerId")
+                                .OnDelete(DeleteBehavior.Cascade);
+                        });
+
+                    b.OwnsOne("Template.Domain.Customers.Email", "Email", b1 =>
+                        {
+                            b1.Property<long>("CustomerId");
+
+                            b1.Property<string>("Value")
+                                .HasColumnName("Email");
+
+                            b1.ToTable("Customer","dbo");
+
+                            b1.HasOne("Template.Domain.Customers.Customer")
+                                .WithOne("Email")
+                                .HasForeignKey("Template.Domain.Customers.Email", "CustomerId")
                                 .OnDelete(DeleteBehavior.Cascade);
                         });
                 });
