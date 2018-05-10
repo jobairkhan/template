@@ -10,7 +10,11 @@
             _id = id;
         }
 
-        public virtual long Id => _id;
+        public virtual long Id
+        {
+            get { return _id; }
+            internal set { _id = value; }
+        }
 
         public override bool Equals(object obj)
         {

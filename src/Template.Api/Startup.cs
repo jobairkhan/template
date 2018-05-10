@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using Halcyon.Web.HAL.Json;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Formatters;
@@ -50,8 +51,20 @@ namespace Template.Api
             services.TryAddTransient<CustomerRepository>();
 
             services
-                .AddMvc();
-                //.AddMvcOptions(c => { c.OutputFormatters.RemoveType<JsonOutputFormatter>(); });
+                .AddMvc()
+                .AddMvcOptions(options =>
+                {
+                    options.OutputFormatters.RemoveType<JsonOutputFormatter>();
+                    options.OutputFormatters.Add(
+                        new JsonHalOutputFormatter(
+                            new[]
+                            {
+                                "application/hal+json",
+                                "application/vnd.example.hal+json",
+                                "application/vnd.example.hal.v1+json"
+                            }
+                    ));
+                });
 
             // Register the Swagger generator, defining one or more Swagger documents
             services.AddSwaggerGen(c =>

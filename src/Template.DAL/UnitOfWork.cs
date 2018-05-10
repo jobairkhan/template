@@ -46,10 +46,12 @@ namespace Template.DAL
             _isCommitted = true;
         }
 
-        public async Task<T> Get<T>(long id, CancellationToken cancellationToken = default(CancellationToken)) where T : class
+        public async Task<T> Get<T>(long id, CancellationToken cancellationToken) where T : class
         {
+            cancellationToken.ThrowIfCancellationRequested();
+
             var dbSet = _context.Set<T>();
-            return await dbSet.FindAsync(id, cancellationToken);
+            return await dbSet.FindAsync(id);
         }
 
         public void SaveOrUpdate<T>(T entity) where T : class

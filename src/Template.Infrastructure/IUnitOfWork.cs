@@ -10,7 +10,7 @@ namespace Template.Infrastructure
     }
     public interface IRepository
     {
-        Task<T> Get<T>(long id, CancellationToken cancellationToken = default(CancellationToken)) where T : class;
+        Task<T> Get<T>(long id, CancellationToken cancellationToken) where T : class;
         void SaveOrUpdate<T>(T entity) where T : class;
         void Delete<T>(T entity) where T : class;
         IQueryable<T> Query<T>() where T : class;

@@ -34,7 +34,9 @@ namespace Template.DAL.EfContext
             {
                 entity.ToTable("Movie", "dbo");
                 entity.HasKey(e => e.Id);
-                entity.Property(e => e.Id).UseSqlServerIdentityColumn();
+                entity.Property(e => e.Id)
+                    .UseSqlServerIdentityColumn()
+                    .HasField("_id"); 
 
                 entity.HasDiscriminator<int>("LicensingModel")
                     .HasValue<TwoDaysMovie>(1)
@@ -45,7 +47,9 @@ namespace Template.DAL.EfContext
             {
                 entity.ToTable("PurchasedMovie", "dbo");
                 entity.HasKey(e => e.Id);
-                entity.Property(e => e.Id).UseSqlServerIdentityColumn();
+                entity.Property(e => e.Id)
+                    .UseSqlServerIdentityColumn()
+                    .HasField("_id"); 
                 entity.OwnsOne(o => o.Price);
                 entity.OwnsOne(o => o.ExpirationDate).Property(p => p.Date).HasColumnName($"RentExpirationDate");
             });

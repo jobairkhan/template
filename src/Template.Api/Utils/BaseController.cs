@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Halcyon.HAL;
+using Halcyon.Web.HAL;
+using Microsoft.AspNetCore.Mvc;
 using Template.Infrastructure;
 
 namespace Template.Api.Utils
@@ -42,7 +44,12 @@ namespace Template.Api.Utils
         protected IActionResult Ok<T>(T result)
         {
             _unitOfWork.Commit();
-            return base.Ok(Envelope.Ok(result));
+            return base.Ok(
+                Envelope.Ok(
+                    new HALResponse(result)
+                        .AddSelfLink(Request)
+                    )
+                );
         }
 
         /// <summary>
