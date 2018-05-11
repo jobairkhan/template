@@ -45,11 +45,7 @@ namespace Template.Api.Utils
         {
             _unitOfWork.Commit();
             return base.Ok(
-                Envelope.Ok(
-                    new HALResponse(result)
-                        .AddSelfLink(Request)
-                    )
-                );
+                Envelope.Ok(result));
         }
 
         /// <summary>

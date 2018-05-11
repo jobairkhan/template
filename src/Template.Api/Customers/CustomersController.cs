@@ -71,7 +71,8 @@ namespace Template.Api.Customers
                 }).ToList()
             };
 
-            return Ok(dto);
+            return Ok(
+                dto.ToHalResponse(Request));
         }
 
         /// <summary>
@@ -92,7 +93,9 @@ namespace Template.Api.Customers
                 MoneySpent = x.MoneySpent,
                 Status = x.Status.Type.ToString(),
                 StatusExpirationDate = x.Status.ExpirationDate
-            }).ToList();
+            })
+                .ToList()
+                .ToHalResponses(Request);
 
             return Ok(data);
         }
