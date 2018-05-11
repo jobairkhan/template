@@ -15,15 +15,15 @@ namespace Template.DAL.EfContext
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            //optionsBuilder.EnableSensitiveDataLogging(true);
+            if (optionsBuilder.IsConfigured == false)
             {
-                if (optionsBuilder.IsConfigured == false)
-                {
-                    optionsBuilder.UseSqlServer(
-                        @"Data Source=(localdb)\\mssqllocaldb;Initial Catalog=OnlineTheater;
+                optionsBuilder.UseSqlServer(
+                    @"Data Source=(localdb)\\mssqllocaldb;Initial Catalog=OnlineTheater;
                        Integrated Security=True;");
-                }
-                base.OnConfiguring(optionsBuilder);
             }
+            base.OnConfiguring(optionsBuilder);
+
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -36,7 +36,7 @@ namespace Template.DAL.EfContext
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.Id)
                     .UseSqlServerIdentityColumn()
-                    .HasField("_id"); 
+                    .HasField("_id");
 
                 entity.HasDiscriminator<int>("LicensingModel")
                     .HasValue<TwoDaysMovie>(1)
@@ -49,7 +49,7 @@ namespace Template.DAL.EfContext
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.Id)
                     .UseSqlServerIdentityColumn()
-                    .HasField("_id"); 
+                    .HasField("_id");
                 entity.OwnsOne(o => o.Price);
                 entity.OwnsOne(o => o.ExpirationDate).Property(p => p.Date).HasColumnName($"RentExpirationDate");
             });

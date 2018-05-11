@@ -46,7 +46,7 @@ namespace Template.DAL
             _isCommitted = true;
         }
 
-        public async Task<T> Get<T>(long id, CancellationToken cancellationToken) where T : class
+        public async Task<T> Get<T>(long id, CancellationToken cancellationToken) where T : Entity
         {
             cancellationToken.ThrowIfCancellationRequested();
 
@@ -54,18 +54,18 @@ namespace Template.DAL
             return await dbSet.FindAsync(id);
         }
 
-        public void SaveOrUpdate<T>(T entity) where T : class
+        public void Insert<T>(T entity) where T : Entity
         {
             _context.Set<T>().Attach(entity);
         }
 
-        public void Delete<T>(T entity) where T : class
+        public void Delete<T>(T entity) where T : Entity
         {
             var dbSet = _context.Set<T>();
             dbSet.Remove(entity);
         }
 
-        public IQueryable<T> Query<T>() where T : class
+        public IQueryable<T> Query<T>() where T : Entity
         {
             return _context.Set<T>().AsQueryable();
         }

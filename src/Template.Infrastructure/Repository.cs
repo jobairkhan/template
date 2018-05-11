@@ -21,7 +21,7 @@ namespace Template.Infrastructure
 
         public void Add(T entity)
         {
-            _unitOfWork.SaveOrUpdate(entity);
+            _unitOfWork.Insert(entity);
         }
     }
 }

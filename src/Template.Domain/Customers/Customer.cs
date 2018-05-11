@@ -19,16 +19,13 @@ namespace Template.Domain.Customers
         private Email _email;
         public virtual Email Email => _email;
 
+        private Dollars _moneySpent;
+        public virtual Dollars MoneySpent => _moneySpent;
+        
         public virtual CustomerStatus Status { get; protected set; }
 
-        private Dollars _moneySpent;
-        public virtual Dollars MoneySpent
-        {
-            get => _moneySpent;
-            protected set => _moneySpent = value;
-        }
-
         private readonly IList<PurchasedMovie> _purchasedMovies;
+
         public virtual IReadOnlyList<PurchasedMovie> PurchasedMovies => _purchasedMovies.ToList();
 
         protected Customer()
@@ -61,7 +58,7 @@ namespace Template.Domain.Customers
             var purchasedMovie = new PurchasedMovie(movie, this, price, expirationDate);
             _purchasedMovies.Add(purchasedMovie);
 
-            MoneySpent += price;
+            _moneySpent += price;
         }
 
         public virtual Result CanPromote()
