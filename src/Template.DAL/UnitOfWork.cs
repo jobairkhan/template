@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using Template.DAL.EfContext;
 using Template.Infrastructure;
 
@@ -10,12 +11,14 @@ namespace Template.DAL
     public sealed class UnitOfWork : IDisposable, IUnitOfWork
     {
         private readonly ApplicationContext _context;
+        private readonly ILogger<UnitOfWork> _logger;
         private bool _isAlive = true;
         private bool _isCommitted;
 
-        public UnitOfWork(ApplicationContext context)
+        public UnitOfWork(ApplicationContext context, ILogger<UnitOfWork> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         public void Dispose()
@@ -31,6 +34,10 @@ namespace Template.DAL
                 {
                     _context.SaveChanges();
                 }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogWarning(ex, "SaveChanges Error");
             }
             finally
             {
