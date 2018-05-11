@@ -52,6 +52,10 @@ namespace Template.DAL.EfContext
                     .HasField("_id");
                 entity.OwnsOne(o => o.Price);
                 entity.OwnsOne(o => o.ExpirationDate).Property(p => p.Date).HasColumnName($"RentExpirationDate");
+                entity.HasOne(c => c.Customer)
+                    .WithMany(p => p.PurchasedMovies);
+                entity.HasOne(m => m.Movie)
+                    .WithMany();
             });
 
         }
@@ -95,7 +99,9 @@ namespace Template.DAL.EfContext
                 });
             });
 
-            entity.HasMany(p => p.PurchasedMovies);
+            entity
+                .HasMany(p => p.PurchasedMovies)
+                .WithOne();
         }
     }
 }
