@@ -24,7 +24,7 @@ namespace Template.Domain.Customers
         
         public virtual CustomerStatus Status { get; protected set; }
 
-        private readonly IList<PurchasedMovie> _purchasedMovies;
+        private IList<PurchasedMovie> _purchasedMovies;
 
         public virtual IReadOnlyList<PurchasedMovie> PurchasedMovies => _purchasedMovies.ToList();
 

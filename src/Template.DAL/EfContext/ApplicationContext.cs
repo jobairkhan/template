@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Template.Domain.Customers;
 using Template.Domain.Movies;
@@ -30,34 +31,37 @@ namespace Template.DAL.EfContext
 
             modelBuilder.Entity<Customer>(BuildCustomerMapping);
 
-            modelBuilder.Entity<Movie>(entity =>
-            {
-                entity.ToTable("Movie", "dbo");
-                entity.HasKey(e => e.Id);
-                entity.Property(e => e.Id)
-                    .UseSqlServerIdentityColumn()
-                    .HasField("_id");
+            modelBuilder.Entity<Movie>(BuildMovieMapping);
 
-                entity.HasDiscriminator<int>("LicensingModel")
-                    .HasValue<TwoDaysMovie>(1)
-                    .HasValue<LifeLongMovie>(2);
-            });
+            modelBuilder.Entity<PurchasedMovie>(BuildPurchaseMovieMapping);
+        }
 
-            modelBuilder.Entity<PurchasedMovie>(entity =>
-            {
-                entity.ToTable("PurchasedMovie", "dbo");
-                entity.HasKey(e => e.Id);
-                entity.Property(e => e.Id)
-                    .UseSqlServerIdentityColumn()
-                    .HasField("_id");
-                entity.OwnsOne(o => o.Price);
-                entity.OwnsOne(o => o.ExpirationDate).Property(p => p.Date).HasColumnName($"RentExpirationDate");
-                entity.HasOne(c => c.Customer)
-                    .WithMany(p => p.PurchasedMovies);
-                entity.HasOne(m => m.Movie)
-                    .WithMany();
-            });
+        private static void BuildPurchaseMovieMapping(EntityTypeBuilder<PurchasedMovie> entity)
+        {
+            entity.ToTable("PurchasedMovie", "dbo");
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.Id)
+                .UseSqlServerIdentityColumn()
+                .HasField("_id");
+            entity.OwnsOne(o => o.Price);
+            entity.OwnsOne(o => o.ExpirationDate).Property(p => p.Date).HasColumnName($"RentExpirationDate");
+            //entity.HasOne(c => c.Customer)
+            //    .WithMany(p => p.PurchasedMovies);
+            //entity.HasOne(m => m.Movie)
+            //    .WithMany();
+        }
 
+        private static void BuildMovieMapping(EntityTypeBuilder<Movie> entity)
+        {
+            entity.ToTable("Movie", "dbo");
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.Id)
+                .UseSqlServerIdentityColumn()
+                .HasField("_id");
+
+            entity.HasDiscriminator<int>("LicensingModel")
+                .HasValue<TwoDaysMovie>(1)
+                .HasValue<LifeLongMovie>(2);
         }
 
         private static void BuildCustomerMapping(EntityTypeBuilder<Customer> entity)
@@ -101,7 +105,7 @@ namespace Template.DAL.EfContext
 
             entity
                 .HasMany(p => p.PurchasedMovies)
-                .WithOne();
+                .WithOne(e => e.Customer);
         }
     }
 }
