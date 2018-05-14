@@ -6,20 +6,20 @@ namespace Template.Domain.Customers
 {
     public class PurchasedMovie : Entity
     {
-        public virtual Movie Movie { get; protected set; }
-        public virtual Customer Customer { get; protected set; }
+        public Movie Movie { get; protected set; }
+        public Customer Customer { get; protected set; }
 
         private decimal _price;
-        public virtual Dollars Price
+        public Dollars Price
         {
             get => Dollars.Of(_price);
             protected set => _price = value;
         }
 
-        public virtual DateTime PurchaseDate { get; protected set; }
+        public DateTime PurchaseDate { get; protected set; }
 
         private DateTime? _expirationDate;
-        public virtual ExpirationDate ExpirationDate
+        public ExpirationDate ExpirationDate
         {
             get => (ExpirationDate)_expirationDate;
             protected set => _expirationDate = value;
