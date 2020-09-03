@@ -21,12 +21,12 @@ namespace Template.Domain.Customers
             customerName = (customerName ?? string.Empty).Trim();
 
             if (customerName.Length == 0)
-                return Result.Fail<CustomerName>("Customer name should not be empty");
+                return Result.Failure<CustomerName>("Customer name should not be empty");
 
             if (customerName.Length > 100)
-                return Result.Fail<CustomerName>("Customer name is too long");
+                return Result.Failure<CustomerName>("Customer name is too long");
 
-            return Result.Ok(new CustomerName(customerName));
+            return Result.Success(new CustomerName(customerName));
         }
         
         public static implicit operator string(CustomerName customerName)
